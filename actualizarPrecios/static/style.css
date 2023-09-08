@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+}
+
+h1 {
+    color: #007bff; /* Cambia el color del título */
+    font-size: 40px; /* Cambia el tamaño de la fuente del título */
+    margin-bottom: 20px; /* Agrega un margen inferior al título */
+}
+
+button{
+    background:#007bff;
+    color:#fff;
+    border:none;
+    position:relative;
+    height:60px;
+    font-size:1.6em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  button:hover{
+    background:#fff;
+    color:#007bff;
+  }
+  button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #007bff;
+    transition:400ms ease all;
+  }
+  button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+
+.product-list {
+    margin-top: 10px;
+    padding: 20px; /* Ajusta el valor del padding según tus preferencias */
+    text-align: center;
+    max-width: 400px; /* Ajusta el valor de max-width según tus preferencias */
+    margin: 0 auto; /* Centra horizontalmente el contenedor */
+}
+
+
+
+.product {
+    padding: 20px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    margin-bottom: 10px;
+}
+
+.product p {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.product strong {
+    font-weight: bold;
+}
+#message {
+    font-size: 14px; /* Tamaño de fuente más pequeño */
+    color: #333;
+    background-color: #dbcccc; /* Cambia el color de fondo a un amarillo */
+    padding: 5px 10px; /* Reducción del espaciado interno */
+    border: 1px solid #f2f0ed; /* Color de borde más oscuro */
+    border-radius: 3px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    opacity: 0; /* Inicialmente, el mensaje estará oculto */
+    transition: opacity 0.3s ease-in-out; /* Agrega una transición */
+}
+#fileInput {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;}
