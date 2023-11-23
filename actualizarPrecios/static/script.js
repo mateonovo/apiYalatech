@@ -4,28 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const messageElement = document.getElementById("message"); // Elemento para mostrar el mensaje
     const productList = document.getElementById("actualizados");
     
-    openButton.addEventListener("click", function() {
-        // Lógica para abrir archivo y enviarlo al backend usando Fetch API
-        const fileInput = document.getElementById("fileInput");
-        const file = fileInput.files[0];
 
-        if (file) {
-            const formData = new FormData();
-            formData.append("file", file);
-
-            fetch("/open", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                showMessage(messageElement, data.message); // Muestra el mensaje en pantalla
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-        }
-    });
     updateButton.addEventListener("click", function() {
         // Lógica para actualizar precios usando Fetch API
         fetch("/update", {
