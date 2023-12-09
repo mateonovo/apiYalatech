@@ -50,13 +50,12 @@ def create_app(env="development", static_folder="../../static"):
     def get_product_list_bd():
         cursor = conn.cursor()
         with cursor:
-            cursor.execute("SELECT codigo, nombre, precio FROM productos")
+            cursor.execute("SELECT codigo,precioIva FROM tblArticulos")
             products = []
             for row in cursor.fetchall():
                 products.append({
                     'barCode': row.codigo,
-                    'name': row.nombre,
-                    'commonPrice': float(row.precio)
+                    'commonPrice': float(row.precioIva)
                 }) 
         return products
     
@@ -93,7 +92,6 @@ def create_app(env="development", static_folder="../../static"):
     @app.route("/update", methods=["POST"])
     def update_prices():
         product_list = get_product_list()
-        c = 0
         actualizados = []
         cursor = conn.cursor()
         with cursor:
@@ -111,10 +109,7 @@ def create_app(env="development", static_folder="../../static"):
                              'name': product_name,
                              'price': float(bd_product['commonPrice'])
                             }    
-                     c += 1
-                     print(f"Se encontraron {c} coincidenciassssssssssssssss")
                      actualizados.append(product)          
-        print(f"Se encontraron {c} coincidencias")
                     # cambiarPrecio(barCode, product_price)                                
         return jsonify({"message": "Precios actualizados y leídos con exitoooooo","actualizados":  actualizados})
     
