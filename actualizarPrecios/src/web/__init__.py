@@ -8,8 +8,9 @@ import pytz
 from src.web.config import config
 import pyodbc
 from src.core import database
+import logging
 
-
+logging.basicConfig(level=logging.INFO)
 
 
 def create_app(env="development", static_folder="../../static"):
@@ -60,12 +61,12 @@ def create_app(env="development", static_folder="../../static"):
         return products
     
     
-    
     def cambiarPrecio(barCode, product_price):
+        merchant_code = "MC2574"
+        key = "c147DC65C0f9c0A"
         url = "http://sg.yalabi.net/open/goodsEditPrice"
         very_text = generate_very_text(key)
         producto_a_actualizar = {
-        
             "merchantGoodsId": barCode,
             "normalPrice": product_price,
         }
@@ -75,14 +76,21 @@ def create_app(env="development", static_folder="../../static"):
             "merchantCode": merchant_code,
             "content-type": "application/json"
         }
-        response = requests.post(url, data=json.dumps(data), headers=headers)
-        if response.status_code == 200 and response.json().get("success"):
-            print("Precio actualizado con éxito. en el producto:" ,{barCode})
-        else:
-            error_msg = response.json().get("errorMsg")
-            print(f"Error al actualizar el precio: {error_msg}")
-    
-        
+        print(data)
+        try:
+            response = requests.post(url, data=json.dumps(data), headers=headers)
+            response.raise_for_status()
+            print(response.json())
+            if response.json().get("success"):
+                logging.info("Precio actualizado con éxito en el producto: %s", barCode)
+            else:
+                error_msg = response.json().get("errorMsg")
+                logging.error("Error al actualizar el precio: %s", error_msg)
+        except requests.exceptions.RequestException as e:
+            logging.error("Error en la solicitud: %s", e)
+        except json.decoder.JSONDecodeError as e:
+            logging.error("Error al decodificar JSON: %s", e)
+
     @app.route("/", methods=["GET"])
     def index():
         return render_template("index.html")
@@ -92,25 +100,26 @@ def create_app(env="development", static_folder="../../static"):
     @app.route("/update", methods=["POST"])
     def update_prices():
         product_list = get_product_list()
+        #print(product_list)
         actualizados = []
         cursor = conn.cursor()
         with cursor:
             bd = get_product_list_bd()
-        print(bd)
+        #print(bd)
         for product in product_list:
             barCode = product['barCode']
             product_price = product['commonPrice']
             product_name = product['name']
             for bd_product in bd:
                  if bd_product['barCode'] == barCode and bd_product['commonPrice'] != product_price:
-                     print(f"Coincidencia encontrada para {barCode}. Precio en bd: {bd_product['commonPrice']}, Precio del producto: {product_price}")
+                     #print(f"Coincidencia encontrada para {barCode}. Precio en bd: {bd_product['commonPrice']}, Precio del producto: {product_price}")
                      product = {
                              'barCode': barCode,
                              'name': product_name,
                              'price': float(bd_product['commonPrice'])
                             }    
                      actualizados.append(product)          
-                    # cambiarPrecio(barCode, product_price)                                
+                     cambiarPrecio(barCode, product["price"])                                
         return jsonify({"message": "Precios actualizados y leídos con exitoooooo","actualizados":  actualizados})
     
     
