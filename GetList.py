@@ -34,8 +34,8 @@ def get_product_list(merchant_code, key,barCode):
         return []
 
 # Datos del comerciante
-merchant_code = "MC2574"
-key = "c147DC65C0f9c0A"
+merchant_code = ""
+key = ""
 bar_code = "bu"
 # Obtener la lista de productos
 product_list = get_product_list(merchant_code, key,bar_code)
