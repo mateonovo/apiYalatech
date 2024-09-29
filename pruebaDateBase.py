@@ -89,8 +89,8 @@ def cambiarPrecio(barCode, product_price):
         print(f"Error al actualizar el precio: {error_msg}")
 
     
-merchant_code = "MC2574"
-key = "c147DC65C0f9c0A"
+merchant_code = ""
+key = ""
 very_text = generate_very_text(key)
 database_filename = 'database.txt'
 read_products_from_txt(database_filename)
