@@ -62,8 +62,8 @@ def create_app(env="development", static_folder="../../static"):
     
     
     def cambiarPrecio(barCode, product_price):
-        merchant_code = "MC2574"
-        key = "c147DC65C0f9c0A"
+        merchant_code = ""
+        key = ""
         url = "http://sg.yalabi.net/open/goodsEditPrice"
         very_text = generate_very_text(key)
         producto_a_actualizar = {
@@ -125,7 +125,7 @@ def create_app(env="development", static_folder="../../static"):
     
     
     
-    merchant_code = "MC2574"
-    key = "c147DC65C0f9c0A"
+    merchant_code = ""
+    key = ""
     very_text = generate_very_text(key)  
     return app
