@@ -16,8 +16,7 @@ def generate_very_text(key):
     return md5_hash.lower()
 
 # Código del comerciante y clave
-merchant_code = "MC2574"
-key = "c147DC65C0f9c0A"
+
 
 # Generar el valor de veryText
 very_text = generate_very_text(key)
